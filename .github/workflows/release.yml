@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+      - name: Package vsix
+        run: npx @vscode/vsce package
+
+      - name: Publish to VS Code Marketplace
+        run: npx @vscode/vsce publish
+        env:
+          VSCE_PAT: ${{ secrets.AZURE_TOKEN }}
+
+      - name: Publish to Open VSX
+        run: |
+          npm install -g ovsx
+          ovsx publish *.vsix
+        env:
+          OVSX_PAT: ${{ secrets.OPEN_VSX_TOKEN }}
+        continue-on-error: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*.vsix"
+          generate_release_notes: true
+          append_body: true
+          body: |
+            ## Install
+
+            ### VS Code Marketplace
+            Install **Proto3 Tools** from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=glubean.proto3-tools).
+
+            ### Manual install
+            1. Download the `.vsix` below
+            2. `Cmd+Shift+P` → **Extensions: Install from VSIX...** → select the file
