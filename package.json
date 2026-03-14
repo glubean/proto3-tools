@@ -1,8 +1,8 @@
 {
-  "name": "proto3-tools",
+  "name": "protobuf-tools",
   "displayName": "Protobuf Tools",
   "description": "Lightweight Protobuf editing tools for Visual Studio Code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "glubean",
   "license": "MIT",
   "repository": {
@@ -37,7 +37,8 @@
     "onLanguage:proto3",
     "onCommand:proto3.compile.one",
     "onCommand:proto3.compile.all",
-    "onCommand:proto3.renumber.scope"
+    "onCommand:proto3.renumber.scope",
+    "onCommand:proto3.lint.one"
   ],
   "main": "./out/src/extension.js",
   "contributes": {
@@ -53,6 +54,10 @@
       {
         "command": "proto3.renumber.scope",
         "title": "proto3: Renumber Fields/Enum Values"
+      },
+      {
+        "command": "proto3.lint.one",
+        "title": "proto3: Lint This Proto"
       }
     ],
     "languages": [
@@ -88,7 +93,7 @@
       }
     ],
     "configuration": {
-      "title": "Proto VSC",
+      "title": "Protobuf Tools",
       "properties": {
         "protoc.path": {
           "type": "string",
@@ -123,6 +128,16 @@
           "default": false,
           "description": "Pass absolute proto file paths to protoc during Compile All."
         },
+        "protolint.path": {
+          "type": "string",
+          "default": "protolint",
+          "description": "Path to the protolint executable."
+        },
+        "protolint.lint_on_save": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run protolint on the active proto file after save."
+        },
         "clang-format.style": {
           "type": "string",
           "default": "file",
@@ -139,8 +154,8 @@
   "scripts": {
     "build": "tsc -p ./",
     "watch": "tsc -w -p ./",
-    "test": "npm run build && node --test out/test/protoModel.test.js",
-    "package:vsix": "vsce package --out proto3-tools-${npm_package_version}.vsix"
+    "test": "npm run build && node --test out/test/*.test.js",
+    "package:vsix": "vsce package --out protobuf-tools-${npm_package_version}.vsix"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
