@@ -1,6 +1,6 @@
 {
   "name": "proto3-tools",
-  "displayName": "Proto3 Tools",
+  "displayName": "Protobuf Tools",
   "description": "Lightweight Protobuf editing tools for Visual Studio Code",
   "version": "0.1.0",
   "publisher": "glubean",
