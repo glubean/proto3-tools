@@ -2,8 +2,9 @@
   "name": "protobuf-tools",
   "displayName": "Protobuf by Glubean",
   "description": "Lightweight Protobuf editing tools for Visual Studio Code",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "glubean",
+  "icon": "images/logo.png",
   "license": "MIT",
   "repository": {
     "type": "git",
