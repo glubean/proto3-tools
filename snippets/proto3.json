@@ -1,0 +1,52 @@
+{
+  "syntax proto3": {
+    "prefix": "sp3",
+    "body": [
+      "syntax = \"proto3\";",
+      "",
+      "package ${1:example.v1};"
+    ],
+    "description": "Insert a proto3 file header"
+  },
+  "message": {
+    "prefix": "msg",
+    "body": [
+      "message ${1:MessageName} {",
+      "  ${2:string field_name = 1;}",
+      "}"
+    ],
+    "description": "Insert a message block"
+  },
+  "enum": {
+    "prefix": "en",
+    "body": [
+      "enum ${1:EnumName} {",
+      "  ${2:ENUM_NAME_UNSPECIFIED} = 0;",
+      "}"
+    ],
+    "description": "Insert an enum block"
+  },
+  "service": {
+    "prefix": "svc",
+    "body": [
+      "service ${1:ServiceName} {",
+      "  rpc ${2:GetItem} (${3:GetItemRequest}) returns (${4:GetItemResponse});",
+      "}"
+    ],
+    "description": "Insert a service block"
+  },
+  "rpc": {
+    "prefix": "rpc",
+    "body": [
+      "rpc ${1:MethodName} (${2:Request}) returns (${3:Response});"
+    ],
+    "description": "Insert an RPC declaration"
+  },
+  "import": {
+    "prefix": "imp",
+    "body": [
+      "import \"${1:path/to/file.proto}\";"
+    ],
+    "description": "Insert an import statement"
+  }
+}

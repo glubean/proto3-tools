@@ -1,0 +1,86 @@
+{
+  "name": "Proto3",
+  "scopeName": "source.proto",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#options"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.proto",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.proto",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.proto",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.proto",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.proto",
+          "match": "\\b(?:syntax|package|import|option|message|enum|service|rpc|returns|oneof|reserved|repeated|optional|required|map)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.proto",
+          "match": "\\b(?:bool|bytes|double|fixed32|fixed64|float|int32|int64|sfixed32|sfixed64|sint32|sint64|string|uint32|uint64)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.proto",
+          "match": "\\b-?\\d+\\b"
+        }
+      ]
+    },
+    "options": {
+      "patterns": [
+        {
+          "name": "entity.name.function.proto",
+          "match": "\\b(?:java_package|java_outer_classname|go_package|csharp_namespace|optimize_for|deprecated|allow_alias|packed)\\b"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "scopeName": "markdown.codeblock.proto",
+  "injectionSelector": "L:text.html.markdown",
+  "patterns": [
+    {
+      "begin": "(^|\\G)(\\s*)(```)(proto|protobuf)\\s*$",
+      "beginCaptures": {
+        "3": {
+          "name": "punctuation.definition.markdown"
+        },
+        "4": {
+          "name": "fenced_code.block.language.markdown"
+        }
+      },
+      "end": "(^|\\G)(\\s*)(```)$",
+      "endCaptures": {
+        "3": {
+          "name": "punctuation.definition.markdown"
+        }
+      },
+      "contentName": "meta.embedded.block.proto",
+      "patterns": [
+        {
+          "include": "source.proto"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "name": "proto3-tools",
+  "displayName": "Proto3 Tools",
+  "description": "Lightweight Protobuf editing tools for Visual Studio Code",
+  "version": "0.1.0",
+  "publisher": "glubean",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glubean/proto-vsc"
+  },
+  "homepage": "https://github.com/glubean/proto-vsc#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters"
+  ],
+  "keywords": [
+    "proto",
+    "proto3",
+    "protobuf",
+    "grpc",
+    "protoc",
+    "vscode-proto3"
+  ],
+  "files": [
+    "out/**",
+    "snippets/**",
+    "syntaxes/**",
+    "README.md",
+    "LICENSE.txt"
+  ],
+  "activationEvents": [
+    "onLanguage:proto3",
+    "onCommand:proto3.compile.one",
+    "onCommand:proto3.compile.all",
+    "onCommand:proto3.renumber.scope"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "proto3.compile.one",
+        "title": "proto3: Compile This Proto"
+      },
+      {
+        "command": "proto3.compile.all",
+        "title": "proto3: Compile All Protos"
+      },
+      {
+        "command": "proto3.renumber.scope",
+        "title": "proto3: Renumber Fields/Enum Values"
+      }
+    ],
+    "languages": [
+      {
+        "id": "proto3",
+        "extensions": [
+          ".proto"
+        ],
+        "aliases": [
+          "Protocol Buffers",
+          "proto3"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "proto3",
+        "scopeName": "source.proto",
+        "path": "./syntaxes/proto3.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.codeblock.proto",
+        "path": "./syntaxes/proto3.codeblock.json",
+        "injectTo": [
+          "text.html.markdown"
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "proto3",
+        "path": "./snippets/proto3.json"
+      }
+    ],
+    "configuration": {
+      "title": "Proto VSC",
+      "properties": {
+        "protoc.path": {
+          "type": "string",
+          "default": "protoc",
+          "description": "Path to the protoc executable."
+        },
+        "protoc.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional arguments passed to protoc."
+        },
+        "protoc.compile_on_save": {
+          "type": "boolean",
+          "default": false,
+          "description": "Compile the current proto file after save."
+        },
+        "protoc.renumber_on_save": {
+          "type": "boolean",
+          "default": false,
+          "description": "Renumber fields or enum values in the current scope before save."
+        },
+        "protoc.compile_all_path": {
+          "type": "string",
+          "default": "",
+          "description": "Root directory used by Compile All. Empty means the current workspace folder."
+        },
+        "protoc.use_absolute_path": {
+          "type": "boolean",
+          "default": false,
+          "description": "Pass absolute proto file paths to protoc during Compile All."
+        },
+        "clang-format.style": {
+          "type": "string",
+          "default": "file",
+          "description": "clang-format style name or inline style."
+        },
+        "clang-format.executable": {
+          "type": "string",
+          "default": "clang-format",
+          "description": "Path to the clang-format executable."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "test": "npm run build && node --test out/test/**/*.test.js",
+    "package:vsix": "vsce package --out proto3-tools-${npm_package_version}.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.27.0",
+    "typescript": "^5.8.2"
+  }
+}
