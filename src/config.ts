@@ -8,6 +8,8 @@ export interface ProtoSettings {
   renumberOnSave: boolean;
   compileAllPath: string;
   useAbsolutePath: boolean;
+  protolintPath: string;
+  protolintOnSave: boolean;
   clangFormatStyle: string;
   clangFormatExecutable: string;
 }
@@ -25,6 +27,7 @@ export function getWorkspaceRoot(folder?: vscode.WorkspaceFolder): string {
 
 export function readSettings(folder?: vscode.WorkspaceFolder): ProtoSettings {
   const protoc = vscode.workspace.getConfiguration('protoc', folder);
+  const protolint = vscode.workspace.getConfiguration('protolint', folder);
   const clang = vscode.workspace.getConfiguration('clang-format', folder);
   const root = getWorkspaceRoot(folder);
   return {
@@ -34,6 +37,8 @@ export function readSettings(folder?: vscode.WorkspaceFolder): ProtoSettings {
     renumberOnSave: protoc.get<boolean>('renumber_on_save', false),
     compileAllPath: resolveCompileAllPath(protoc.get<string>('compile_all_path', ''), folder, root),
     useAbsolutePath: protoc.get<boolean>('use_absolute_path', false),
+    protolintPath: resolveConfigString(protolint.get<string>('path', 'protolint'), folder),
+    protolintOnSave: protolint.get<boolean>('lint_on_save', false),
     clangFormatStyle: clang.get<string>('style', 'file').trim(),
     clangFormatExecutable: clang.get<string>('executable', 'clang-format').trim() || 'clang-format',
   };

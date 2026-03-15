@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { getWorkspaceFolderForUri, getWorkspaceRoot, readSettings } from './config';
 import { ProtoCompiler } from './compiler';
+import { ProtoLinter } from './linter';
 import {
   ProtoImport,
   ProtoNode,
@@ -52,7 +53,9 @@ const parseCache = new Map<string, ProtoParseResult>();
 
 export function activate(context: vscode.ExtensionContext): void {
   const compiler = new ProtoCompiler();
+  const linter = new ProtoLinter();
   context.subscriptions.push({ dispose: () => compiler.dispose() });
+  context.subscriptions.push({ dispose: () => linter.dispose() });
 
   context.subscriptions.push(
     vscode.languages.registerCompletionItemProvider(
@@ -74,6 +77,13 @@ export function activate(context: vscode.ExtensionContext): void {
         return;
       }
       await compiler.compileAllFromDocument(document);
+    }),
+    vscode.commands.registerCommand('proto3.lint.one', async () => {
+      const document = vscode.window.activeTextEditor?.document;
+      if (!document || document.languageId !== 'proto3') {
+        return;
+      }
+      await linter.lintDocument(document);
     }),
     vscode.commands.registerCommand('proto3.renumber.scope', async () => {
       const editor = vscode.window.activeTextEditor;
@@ -126,6 +136,9 @@ export function activate(context: vscode.ExtensionContext): void {
       await compiler.validateDocument(document);
       if (settings.compileOnSave) {
         await compiler.compileDocument(document);
+      }
+      if (settings.protolintOnSave) {
+        await linter.lintDocument(document);
       }
     })
   );
