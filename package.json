@@ -2,15 +2,15 @@
   "name": "protobuf-tools",
   "displayName": "Protobuf by Glubean",
   "description": "Lightweight Protobuf editing tools for Visual Studio Code",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "glubean",
   "icon": "images/logo.png",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/glubean/proto-vsc"
+    "url": "https://github.com/glubean/proto3-tools"
   },
-  "homepage": "https://github.com/glubean/proto-vsc#readme",
+  "homepage": "https://github.com/glubean/proto3-tools#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
